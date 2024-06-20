@@ -63,15 +63,6 @@ def fun_zernike(ns, ms, r):
 
     return np.array(all)
 
-
-def fun_zernpy(ns, ms, r):
-    all = []
-    for i in range(len(ms)):
-        zp = ZernPol(m=int(ms[i]), n=int(ns[i]))
-        all.append(zp.radial(r))
-
-    return np.array(all)
-
 # Timing
 r = np.linspace(0, 1, 100)
 times = []
