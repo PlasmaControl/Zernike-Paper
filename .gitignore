@@ -2,3 +2,5 @@ figures/
 *.slurm
 *.out
 yge*
+*.ipynb_checkpoints/
+__pycache__/
