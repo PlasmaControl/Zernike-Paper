@@ -33,3 +33,4 @@ for prec in tqdm(range_prec):
 diff = np.array(diff)
 
 plt.plot(range_prec, diff)
+plt.savefig("precision_plot.png")
