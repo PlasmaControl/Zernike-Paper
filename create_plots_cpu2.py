@@ -1,13 +1,8 @@
 import sys
 import os
 
-from zernipax import set_device
-
-set_device("gpu")
-
 import numpy as np
 import matplotlib.pyplot as plt
-import mpmath
 import timeit
 from tqdm import tqdm
 
@@ -33,11 +28,11 @@ from zernipax.backend import jax
 
 def fun_zernipax_clear(ns, ms, r):
     jax.clear_caches()
-    return zernike_radial_old_desc(r[:, np.newaxis], ns, ms, 0)
+    return zernike_radial(r, ns, ms, 0)
 
 
 def fun_zernipax(ns, ms, r):
-    return zernike_radial_old_desc(r[:, np.newaxis], ns, ms, 0)
+    return zernike_radial(r, ns, ms, 0)
 
 
 def fun_zern(ns, ms, r):
@@ -67,6 +62,7 @@ def fun_zernike(ns, ms, r):
 
     return np.array(all)
 
+
 # Timing
 r = np.linspace(0, 1, 100)
 times = []
@@ -84,7 +80,6 @@ for res in tqdm(range_res):
     t3 = timeit.timeit(
         lambda: fun_zernipax(ns, ms, r).block_until_ready(), number=num_exec
     )
-
     times.append([t1, t2, t3])
 times = np.array(times) * 1000 / num_exec
 
@@ -98,7 +93,7 @@ plt.ylabel("Time (ms)")
 plt.title("Time Comparison of Computation of Radial Zernike Polynomials")
 plt.grid()
 plt.legend()
-plt.savefig("gpu_t_compare.png", dpi=1000)
+plt.savefig("cpu2_t_compare.png", dpi=1000)
 
 plt.figure()
 plt.semilogy(range_res, times[:, 0], label="ZERN")
@@ -109,7 +104,7 @@ plt.ylabel("Time (ms)")
 plt.title("Time Comparison of Computation of Radial Zernike Polynomials")
 plt.grid()
 plt.legend()
-plt.savefig("gpu_t_compare_log.png", dpi=1000)
+plt.savefig("cpu2_t_compare_log.png", dpi=1000)
 
 plt.figure()
 plt.plot(range_res[:10], times[:10, 0], label="ZERN")
@@ -121,4 +116,4 @@ plt.xticks(range_res[:10])
 plt.title("Time Comparison of Computation of Radial Zernike Polynomials")
 plt.grid()
 plt.legend()
-plt.savefig("gpu_t_compare_low_res.png", dpi=1000)
+plt.savefig("cpu2_t_compare_low_res.png", dpi=1000)

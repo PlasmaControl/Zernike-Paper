@@ -80,24 +80,9 @@ for res in tqdm(range_res):
     t3 = timeit.timeit(
         lambda: fun_zernipax(ns, ms, r).block_until_ready(), number=num_exec
     )
-    t4 = timeit.timeit(
-        lambda: fun_zernipax_clear(ns, ms, r).block_until_ready(), number=num_exec
-    )
-
-    times.append([t1, t2, t3, t4])
+    times.append([t1, t2, t3])
 times = np.array(times) * 1000 / num_exec
 
-plt.figure()
-plt.plot(range_res, times[:, 0], label="ZERN")
-plt.plot(range_res, times[:, 1], label="ZERNIKE")
-plt.plot(range_res, times[:, 2], label="ZERNIPAX")
-plt.plot(range_res, times[:, 3], label="ZERNIPAX-Compile")
-plt.xlabel("Resolution")
-plt.ylabel("Time (ms)")
-plt.title("Time Comparison of Computation of Radial Zernike Polynomials")
-plt.grid()
-plt.legend()
-plt.savefig("cpu_t_compare_compile.png", dpi=1000)
 
 plt.figure()
 plt.plot(range_res, times[:, 0], label="ZERN")
@@ -122,11 +107,12 @@ plt.legend()
 plt.savefig("cpu_t_compare_log.png", dpi=1000)
 
 plt.figure()
-plt.plot(range_res, times[:10, 0], label="ZERN")
-plt.plot(range_res, times[:10, 1], label="ZERNIKE")
-plt.plot(range_res, times[:10, 2], label="ZERNIPAX")
+plt.plot(range_res[:10], times[:10, 0], label="ZERN")
+plt.plot(range_res[:10], times[:10, 1], label="ZERNIKE")
+plt.plot(range_res[:10], times[:10, 2], label="ZERNIPAX")
 plt.xlabel("Resolution")
 plt.ylabel("Time (ms)")
+plt.xticks(range_res[:10])
 plt.title("Time Comparison of Computation of Radial Zernike Polynomials")
 plt.grid()
 plt.legend()

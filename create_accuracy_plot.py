@@ -96,11 +96,11 @@ exact = fun_exact(ns, ms, r)
 if res <= 50:
     plot_comparison(
         exact,
-        (all_zernipax, all_zern, all_zernike, all_zernpy),
+        (all_zernipax, all_zern, all_zernpy, all_zernike),
         basis,
         dx=0,
         type="absolute",
-        names=("Zernipax:", "Zern:", "Zernike:", "Zernpy:"),
+        names=("ZERNIPAX:", "ZERN:", "ZERNPY:", "ZERNIKE:"),
         print_error=True,
     )
 else:
@@ -110,7 +110,7 @@ else:
         basis,
         dx=0,
         type="absolute",
-        names=("Zernipax:", "Zern:", "Zernike:"),
+        names=("ZERNIPAX:", "ZERN:", "ZERNIKE:"),
         print_error=True,
     )
 plt.savefig("compare_all_accuracy.png", dpi=1000)
