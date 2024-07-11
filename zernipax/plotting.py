@@ -301,10 +301,10 @@ def plot_comparison(
             Zmn_p = "\\frac{d" + derv + "\\tilde{Z}_{nm}(x)}{d x" + derv + "}"
         title = description + "$\\max_{x \\in (0,1)} |" + Zmn + "-" + Zmn_p
         if type == "absolute":
-            c = np.max(abs(methods[i] - exact), axis=0) / np.mean(abs(exact))
+            c = np.max(abs(methods[i] - exact), axis=0)
             title = title + "|$"
         else:
-            c = np.max(abs(methods[i] - exact), axis=0)
+            c = np.max(abs(methods[i] - exact), axis=0) / np.mean(abs(exact))
             title = title + "| / |\\bar{Z}_{lm}|$"
         im = ax[i].scatter(
             basis.modes[:, 0],
