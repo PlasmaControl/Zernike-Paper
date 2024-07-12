@@ -4,7 +4,6 @@ import mpmath
 
 from zernipax.basis import ZernikePolynomial
 from zernipax.zernike import *
-from zernipax.backend import jax
 from tqdm import tqdm
 
 
@@ -16,8 +15,8 @@ def fun_exact_prec(ns, ms, r, prec):
     return zt0
 
 
-range_prec = np.arange(20, 81, 2)
-res = 150
+range_prec = np.arange(8, 101, 2)
+res = 100
 
 basis = ZernikePolynomial(L=res, M=res, spectral_indexing="ansi", sym="cos")
 ms = basis.modes[:, 1]
@@ -25,12 +24,18 @@ ns = basis.modes[:, 0]
 r = np.linspace(0, 1, 100)
 
 diff = []
-val_old = fun_exact_prec(ns, ms, r, 200)
+exact_prec = 200
+exact = fun_exact_prec(ns, ms, r, exact_prec)
 
 for prec in tqdm(range_prec):
     val = fun_exact_prec(ns, ms, r, prec)
-    diff.append(np.max(val - val_old))
+    diff.append(np.max(val - exact))
+
 diff = np.array(diff)
+results = np.vstack((range_prec, diff)).T
 
 plt.plot(range_prec, diff)
+plt.scatter(range_prec, diff)
+plt.title(f"Precision plot with Resolution={res} and Exact precision: {exact_prec}")
 plt.savefig("precision_plot.png")
+np.savetxt("results_precision.txt", results)
