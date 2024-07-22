@@ -4,3 +4,4 @@ figures/
 yge*
 *.ipynb_checkpoints/
 __pycache__/
+001_results_precision.txt
