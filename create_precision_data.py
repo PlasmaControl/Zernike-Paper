@@ -34,8 +34,4 @@ for prec in tqdm(range_prec):
 diff = np.array(diff)
 results = np.vstack((range_prec, diff)).T
 
-plt.plot(range_prec, diff)
-plt.scatter(range_prec, diff)
-plt.title(f"Precision plot with Resolution={res} and Exact precision: {exact_prec}")
-plt.savefig("precision_plot.png")
 np.savetxt("results_precision.txt", results)
