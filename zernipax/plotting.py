@@ -286,7 +286,7 @@ def plot_comparison(
     )
 
     # define the bins and normalize
-    bounds = np.logspace(-16, 0, 17)
+    bounds = np.logspace(-16, 0, 9)
     norm = matplotlib.colors.BoundaryNorm(bounds, cmap.N)
 
     fig, ax = plt.subplots(1, N, squeeze=True, figsize=(N * 5, 4))
@@ -306,6 +306,7 @@ def plot_comparison(
         else:
             c = np.max(abs(methods[i] - exact), axis=0) / np.mean(abs(exact))
             title = title + "| / |\\bar{Z}_{lm}|$"
+        # title = description  # for some plots I used this title style
         im = ax[i].scatter(
             basis.modes[:, 0],
             basis.modes[:, 1],
@@ -315,23 +316,21 @@ def plot_comparison(
         )
 
         ax[i].grid(True)
-        ax[i].set_xticks(np.arange(0, res + 1, 5))
-        ax[i].set_yticks(np.arange(0, res + 1, 5))
-        ax[i].set_xlabel("$n$", fontsize=12)
-        ax[i].set_ylabel("$m$", fontsize=12)
-        ax[i].set_title(title, fontsize=14)
+        ax[i].set_xticks(np.arange(0, res + 1, 10))
+        ax[i].set_yticks(np.arange(0, res + 1, 10))
+        ax[i].set_xlabel("$n$")
+        ax[i].set_ylabel("$m$")
+        ax[i].set_title(title)
         if print_error:
             ax[i].text(
                 0,
                 45,
                 f"Max error: {np.max(c):.2e}",
-                fontsize=13,
             )
             ax[i].text(
                 0,
                 40,
                 f"Mean error: {np.mean(c):.2e}",
-                fontsize=13,
             )
     # Create a separate axis for the colorbar
     cbar_ax = fig.add_axes([0.92, 0.15, 0.02, 0.7])  # [left, bottom, width, height]

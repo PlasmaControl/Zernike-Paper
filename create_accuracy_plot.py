@@ -93,6 +93,10 @@ if res <= 50:
     all_zernpy = fun_zernpy(ns, ms, r).T
 exact = fun_exact(ns, ms, r)
 
+fontsize = 16
+plt.rcParams.update({"font.size": fontsize})
+plt.rc("legend", fontsize=fontsize - 4)  # legend fontsize
+
 if res <= 50:
     plot_comparison(
         exact,
@@ -100,7 +104,7 @@ if res <= 50:
         basis,
         dx=0,
         type="absolute",
-        names=("ZERNIPAX:", "ZERN:", "ZERNPY:", "ZERNIKE:"),
+        names=("ZERNIPAX", "ZERN", "ZERNPY", "ZERNIKE"),
         print_error=True,
     )
 else:
@@ -113,4 +117,4 @@ else:
         names=("ZERNIPAX:", "ZERN:", "ZERNIKE:"),
         print_error=True,
     )
-plt.savefig("compare_all_accuracy.png", dpi=1000)
+plt.savefig("compare_all_accuracy.png", dpi=1000, bbox_inches="tight")
